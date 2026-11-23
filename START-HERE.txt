@@ -1,0 +1,39 @@
+BATCH — BAKER ORDER BOOK
+
+A simple practice app based on the supplied baking brief.
+
+PLAN AND IMPLEMENTATION
+1. Build pure business rules for orders, prices, hours, dates, capacity, and helper bookings.
+2. Build a single-screen interface with order entry, status actions, a seven-day schedule, and weekly totals.
+3. Test rules first, then test complete browser workflows and responsive layouts.
+
+CODE
+- dist/index.html: screen and accessible native forms/dialogs
+- dist/style.css: responsive presentation; mobile order cards
+- dist/rules.mjs: pure calculations and state transitions
+- dist/app.mjs: interface events and browser storage
+- test.mjs: executable business rule tests
+No build step or package installation required.
+
+RUN LOCALLY
+From this folder run: python3 -m http.server 8765 --directory dist
+Then open http://localhost:8765
+Run automated tests with: node test.mjs
+
+ASSUMPTIONS
+- Two days means two calendar days, inclusive at the boundary.
+- Quantities are whole cakes or whole dozens of cupcakes.
+- Capacity is 8 hours/day, or 12 hours with a helper.
+- Only accepted/picked-up orders count toward booked sales.
+- Helper cost is $100 per booked day; sales less helper cost is not profit.
+- Requests do not reserve capacity until accepted. Acceptance rechecks capacity in arrival order.
+- Changes require notice for both the original and proposed pickup dates.
+- The practice clock starts on Nov 23, 2026. Accept requests & next day closes the simulated day at 5 pm, marks due accepted orders picked up, and advances the date.
+- Sample orders are Jasmine, Okafor, and Patel from the screenshot. Okafor is rejected for insufficient notice.
+- Manual DM entry; the referenced Instagram HTML file was not supplied.
+- Data is stored only in this browser, with no cloud sync or Instagram connection.
+
+VERIFICATION
+All 9 automated tests passed: notice boundary, product calculations, capacity/rechecks, helper booking, edits/totals, date moves, cancellation, day advancement/pickup, and invalid inputs.
+Browser checks passed: app loading; add order; capacity and notice errors; acceptance; helper capacity/cost; edit; cancel; reject; customer search; reload persistence; blocked late cancellation; day advancement and pickup status; reset samples; mobile layout without page overflow.
+An initialization error found during browser testing was fixed and rechecked. Mobile tables were changed to cards after visual inspection.
